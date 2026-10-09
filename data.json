@@ -1,0 +1,185 @@
+{
+  "nextUserId": 6,
+  "users": [
+    {
+      "id": 1,
+      "name": "Ali",
+      "username": "ali",
+      "role": "Student",
+      "department": "CS",
+      "courses": [
+        "CS101"
+      ],
+      "salt": "e316f8e643ade74868643f8fbb599774",
+      "passwordHash": "63da1c0560e4ac4e70b9d8594e1f6509dec81d09a47c119f827f5f370b26867a400fd7256a960c821f5a062ec8306d6863958ad7768d85be1e656091edef81f6"
+    },
+    {
+      "id": 2,
+      "name": "Sara",
+      "username": "sara",
+      "role": "Faculty",
+      "department": "CS",
+      "courses": [
+        "CS101"
+      ],
+      "salt": "354a24e21e929d1accc1d968b001504b",
+      "passwordHash": "e4b85102b58f95fc75dff71053121d0df7aa91029d172580e302cff8dbe3e040b6057b3a952346521c0f42e59fee4f48103991673646eba7900211a51a03edea"
+    },
+    {
+      "id": 3,
+      "name": "Ahmed",
+      "username": "ahmed",
+      "role": "Student",
+      "department": "EE",
+      "courses": [
+        "EE101"
+      ],
+      "salt": "ee0dbd03ada749503e51dccd5211f8eb",
+      "passwordHash": "e5034da0b1ac33543c7695d46fcf967ee459dff64b52804207785472d92e3abd238a56243b5f73a7feb75a478a590d3e43b7d0c1c8e302577a8082d6bf46fe38"
+    },
+    {
+      "id": 4,
+      "name": "Administrator",
+      "username": "admin",
+      "role": "Admin",
+      "department": "Administration",
+      "courses": [],
+      "salt": "9128a794b09b1c72ae756b0f408239b6",
+      "passwordHash": "f04e4588e45fd1510ac739f7a049febbf2f0b1919f6e76024e37b89fd157c9234d811d5a1d57fb64de376dd001c328d5ded655deb4c1441c784d9d445874d744"
+    },
+    {
+      "id": 5,
+      "name": "Faryal Shariq",
+      "username": "faryal",
+      "role": "Student",
+      "department": "CS",
+      "courses": [
+        "CS101"
+      ],
+      "salt": "ea4136de4ba4bef3a98b0588d73996db",
+      "passwordHash": "070260e637607a80eff8792b09b9aff8791509df8f51e85020950fc86bfe46fb6cc96f804aa3493f4d6a840ab11667c8cd012bc4378d508ec3adf4a0c217d18e"
+    }
+  ],
+  "groups": [
+    {
+      "id": "bscs-a",
+      "name": "BSCS Section A",
+      "type": "General",
+      "courseCode": "",
+      "members": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "id": "cs-faculty",
+      "name": "CS Faculty",
+      "type": "General",
+      "courseCode": "",
+      "members": [
+        2
+      ]
+    },
+    {
+      "id": "fyp-team",
+      "name": "FYP Team",
+      "type": "General",
+      "courseCode": "",
+      "members": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "course-cs101",
+      "name": "Introduction to Computing",
+      "type": "Course",
+      "courseCode": "CS101",
+      "members": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "course-ee101",
+      "name": "Electrical Engineering Basics",
+      "type": "Course",
+      "courseCode": "EE101",
+      "members": [
+        3
+      ]
+    },
+    {
+      "id": "group-e3fe438a-15b5-481a-8506-1f80e77f7153",
+      "name": "Sports CS",
+      "type": "General",
+      "courseCode": "",
+      "members": [
+        1,
+        5
+      ]
+    }
+  ],
+  "messages": [
+    {
+      "id": "message-9b86f117-ea3e-4dc7-8b8e-0524259498b6",
+      "groupId": "course-ee101",
+      "senderId": 4,
+      "sender": "Administrator",
+      "text": "sup",
+      "time": "2026-10-09T05:55:10.698Z"
+    },
+    {
+      "id": "message-43934002-9b46-45ea-848e-0627b7cba99e",
+      "groupId": "bscs-a",
+      "senderId": 1,
+      "sender": "Ali",
+      "text": "sup",
+      "time": "2026-10-09T05:56:58.397Z"
+    },
+    {
+      "id": "message-b12bd914-c490-43e2-86a2-4abceff9a0ad",
+      "groupId": "bscs-a",
+      "senderId": 4,
+      "sender": "Administrator",
+      "text": "hi",
+      "time": "2026-10-09T05:59:58.511Z"
+    },
+    {
+      "id": "message-b8730da8-fd0e-4030-b02b-5844e6c95592",
+      "groupId": "bscs-a",
+      "senderId": 2,
+      "sender": "Sara",
+      "text": "hello hello",
+      "time": "2026-10-09T06:03:42.300Z"
+    },
+    {
+      "id": "message-fcb926a5-0528-40f0-98fa-40b208eca4b2",
+      "groupId": "bscs-a",
+      "senderId": 5,
+      "sender": "Faryal Shariq",
+      "text": "hihi",
+      "time": "2026-10-09T06:08:18.649Z"
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Students week!",
+      "message": "iss heree!",
+      "groupId": "all",
+      "sender": "Administrator",
+      "time": "2026-10-09T05:55:34.565Z"
+    },
+    {
+      "id": 2,
+      "title": "Trials!",
+      "message": "Cricket trials todayy",
+      "groupId": "bscs-a",
+      "sender": "Administrator",
+      "time": "2026-10-09T06:05:01.990Z"
+    }
+  ],
+  "nextAnnouncementId": 3
+}

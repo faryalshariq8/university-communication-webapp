@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusLoop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">C</div>
+            <div>
+                <h1>Campus <span>Loop</span></h1>
+                <p>University Communication Portal</p>
+            </div>
+        </div>
+        <button id="logoutButton" class="logout hidden">Log out</button>
+    </header>
+
+    <section id="loginPage" class="login-wrap">
+        <form id="loginForm" class="login-card">
+            <div class="login-logo">C</div>
+            <p class="eyebrow">WELCOME TO COMSATS</p>
+            <h2>Sign in to your account</h2>
+            <p class="hint">Log in to access your university groups and announcements.</p>
+
+            <label for="loginUsername">Username</label>
+            <input id="loginUsername" autocomplete="username" required>
+
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" autocomplete="current-password" required>
+
+            <button type="submit">Sign In</button>
+            <p id="loginStatus" class="status-text" role="status"></p>
+
+            <div class="demo-info">
+                <strong>Demo accounts</strong>
+                <p>Admin: admin / Admin123!</p>
+                <p>Student: ali / Ali123!</p>
+                <p>Faculty: sara / Sara123!</p>
+                <p>Student: ahmed / Ahmed123!</p>
+            </div>
+        </form>
+    </section>
+
+    <main id="appPage" class="hidden">
+        <aside class="sidebar">
+            <section class="panel account-panel">
+                <p class="eyebrow">SIGNED IN AS</p>
+                <h2 id="currentName">User</h2>
+                <p id="currentDetails" class="hint"></p>
+                <span id="roleBadge" class="role-badge"></span>
+            </section>
+
+            <section class="panel">
+                <p class="eyebrow">YOUR COMMUNITY</p>
+                <h2>My Groups</h2>
+                <div id="groups"></div>
+            </section>
+
+            <section id="adminPanel" class="panel hidden">
+                <p class="eyebrow">ADMINISTRATION</p>
+                <h2>Add User</h2>
+                <form id="userForm">
+                    <label for="newName">Full name</label>
+                    <input id="newName" required>
+
+                    <label for="newUsername">Username</label>
+                    <input id="newUsername" minlength="3" maxlength="30" required>
+
+                    <label for="newPassword">Temporary password</label>
+                    <input id="newPassword" type="password" minlength="8" required>
+
+                    <label for="newRole">Role</label>
+                    <select id="newRole">
+                        <option>Student</option>
+                        <option>Faculty</option>
+                        <option>Admin</option>
+                    </select>
+
+                    <label for="newDepartment">Department</label>
+                    <input id="newDepartment" placeholder="CS, EE, etc." required>
+
+                    <label for="newCourses">Course codes</label>
+                    <input id="newCourses" placeholder="CS101, CS201">
+
+                    <button type="submit">Create User</button>
+                </form>
+            </section>
+
+            <section id="groupAdminPanel" class="panel hidden">
+                <p class="eyebrow">GROUP MANAGEMENT</p>
+                <h2>Create Group</h2>
+                <form id="groupForm">
+                    <label for="newGroupName">Group name</label>
+                    <input id="newGroupName" required>
+
+                    <label for="newGroupType">Group type</label>
+                    <select id="newGroupType">
+                        <option value="General">General</option>
+                        <option value="Course">Course</option>
+                    </select>
+
+                    <div id="courseCodeWrap" class="hidden">
+                        <label for="newCourseCode">Course code</label>
+                        <input id="newCourseCode" placeholder="CS101">
+                    </div>
+
+                    <p class="hint">Choose initial members.</p>
+                    <div id="createMemberOptions" class="member-list"></div>
+                    <button type="submit">Create Group</button>
+                </form>
+            </section>
+
+            <section id="membershipPanel" class="panel hidden">
+                <p class="eyebrow">ACCESS CONTROL</p>
+                <h2>Manage Members</h2>
+
+                <label for="manageGroup">Choose group</label>
+                <select id="manageGroup"></select>
+
+                <div id="manageMemberOptions" class="member-list"></div>
+                <button id="saveMembers" type="button">Save Membership</button>
+            </section>
+
+            <section id="announcementAdminPanel" class="panel hidden">
+                <p class="eyebrow">CAMPUS UPDATES</p>
+                <h2>Publish Announcement</h2>
+                <form id="announcementForm">
+                    <label for="announcementTitle">Title</label>
+                    <input id="announcementTitle" maxlength="120" required>
+
+                    <label for="announcementTarget">Send to</label>
+                    <select id="announcementTarget">
+                        <option value="all">All users</option>
+                    </select>
+
+                    <label for="announcementMessage">Announcement</label>
+                    <textarea id="announcementMessage" maxlength="3000" rows="4" required></textarea>
+
+                    <button type="submit">Publish Announcement</button>
+                </form>
+            </section>
+
+            <p id="adminStatus" class="status-text" role="status"></p>
+        </aside>
+
+        <section class="content">
+            <section class="panel chat-panel">
+                <div class="chat-heading">
+                    <div>
+                        <p class="eyebrow">REAL-TIME MESSAGING</p>
+                        <h2 id="chatTitle">Welcome to CampusLoop</h2>
+                        <p id="chatStatus" class="hint">Choose one of your groups to begin.</p>
+                    </div>
+                    <span class="live-label"><span></span> Live</span>
+                </div>
+
+                <div id="messages">
+                    <div class="empty-state">
+                        <div class="empty-icon">✉</div>
+                        <h3>Your conversations appear here</h3>
+                        <p>Select an authorized group to start chatting.</p>
+                    </div>
+                </div>
+
+                <form id="messageForm">
+                    <input id="messageInput" maxlength="1000"
+                        placeholder="Write your message..." autocomplete="off">
+                    <button type="submit">Send ↗</button>
+                </form>
+                <p class="chat-footer">Group access is checked by the server.</p>
+            </section>
+
+            <section class="panel announcements-panel">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">STAY INFORMED</p>
+                        <h2>Announcements</h2>
+                    </div>
+                    <span class="notice-count" id="announcementCount">0</span>
+                </div>
+                <div id="announcements">
+                    <p class="hint">No announcements yet.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>CampusLoop · University communication demo</footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const $ = id => document.getElementById(id);
+
+        const loginPage = $("loginPage");
+        const appPage = $("appPage");
+        const socket = io({ autoConnect: false });
+
+        let me = null;
+        let users = [];
+        let groups = [];
+        let selectedGroup = null;
+        let announcements = [];
+
+        async function api(url, method, body) {
+            const options = { method: method || "GET" };
+
+            if (body !== undefined) {
+                options.headers = { "Content-Type": "application/json" };
+                options.body = JSON.stringify(body);
+            }
+
+            const response = await fetch(url, options);
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.error || "Request failed.");
+            }
+
+            return result;
+        }
+
+        function showStatus(message) {
+            $("adminStatus").textContent = message;
+        }
+
+        function resetChat(message) {
+            selectedGroup = null;
+            $("chatTitle").textContent = "Welcome to CampusLoop";
+            $("chatStatus").textContent = message;
+            $("messages").innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">✉</div>
+                    <h3>Your conversations appear here</h3>
+                    <p>Select an authorized group to start chatting.</p>
+                </div>`;
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            $("loginStatus").textContent = "Signing in...";
+
+            try {
+                await api("/api/login", "POST", {
+                    username: $("loginUsername").value,
+                    password: $("loginPassword").value
+                });
+
+                await startApp();
+            } catch (error) {
+                $("loginStatus").textContent = error.message;
+            }
+        }
+
+        async function startApp() {
+            const result = await api("/api/data");
+            me = result.user;
+            users = result.users;
+            groups = result.groups;
+            announcements = result.announcements;
+
+            loginPage.classList.add("hidden");
+            appPage.classList.remove("hidden");
+            $("logoutButton").classList.remove("hidden");
+
+            $("currentName").textContent = me.name;
+            $("currentDetails").textContent =
+                me.department + " · " + me.username;
+            $("roleBadge").textContent = me.role;
+
+            const isAdmin = me.role === "Admin";
+
+            $("adminPanel").classList.toggle("hidden", !isAdmin);
+            $("groupAdminPanel").classList.toggle("hidden", !isAdmin);
+            $("membershipPanel").classList.toggle("hidden", !isAdmin);
+            $("announcementAdminPanel").classList.toggle("hidden", !isAdmin);
+
+            showGroups();
+            showCreateMembers();
+            showManageGroups();
+            showAnnouncementTargets();
+            showAnnouncements();
+
+            socket.connect();
+            resetChat("Choose one of your groups to begin.");
+        }
+
+        function showGroups() {
+            $("groups").innerHTML = "";
+
+            if (!groups.length) {
+                $("groups").textContent = "No groups available.";
+                return;
+            }
+
+            groups.forEach(group => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "group-button";
+                button.classList.toggle("active", selectedGroup === group.id);
+
+                const name = document.createElement("span");
+                name.className = "group-name";
+                name.textContent = group.name;
+
+                const details = document.createElement("small");
+                details.textContent = group.type === "Course"
+                    ? group.courseCode + " · Course group"
+                    : group.members.length + " members";
+
+                button.append(name, details);
+
+                button.addEventListener("click", () => {
+                    selectedGroup = null;
+                    $("chatStatus").textContent = "Checking group access...";
+                    socket.emit("join-group", group.id);
+                });
+
+                $("groups").appendChild(button);
+            });
+        }
+
+        function addMemberCheckbox(container, user, checked) {
+            const label = document.createElement("label");
+            label.className = "member-option";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = user.id;
+            checkbox.checked = checked;
+
+            const text = document.createElement("span");
+            text.textContent = user.name + " · " + user.role +
+                " · " + user.department;
+
+            label.append(checkbox, text);
+            container.appendChild(label);
+        }
+
+        function showCreateMembers() {
+            $("createMemberOptions").innerHTML = "";
+
+            users.forEach(user => {
+                addMemberCheckbox($("createMemberOptions"), user, false);
+            });
+        }
+
+        function showManageGroups() {
+            $("manageGroup").innerHTML = "";
+
+            groups.forEach(group => {
+                const option = document.createElement("option");
+                option.value = group.id;
+                option.textContent = group.name;
+                $("manageGroup").appendChild(option);
+            });
+
+            showManageMembers();
+        }
+
+        function showManageMembers() {
+            const container = $("manageMemberOptions");
+            container.innerHTML = "";
+
+            const group = groups.find(item => item.id === $("manageGroup").value);
+
+            if (!group) {
+                return;
+            }
+
+            users.forEach(user => {
+                const allowed = group.type !== "Course" ||
+                    user.role === "Admin" ||
+                    user.courses.includes(group.courseCode);
+
+                const label = document.createElement("label");
+                label.className = "member-option";
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.value = user.id;
+                checkbox.checked = group.members.includes(user.id);
+                checkbox.disabled = !allowed;
+
+                const text = document.createElement("span");
+                text.textContent = user.name + " · " + user.role +
+                    (allowed ? "" : " (not assigned to " + group.courseCode + ")");
+
+                label.append(checkbox, text);
+                container.appendChild(label);
+            });
+        }
+
+        function showAnnouncementTargets() {
+            const select = $("announcementTarget");
+            select.innerHTML = "";
+
+            const allOption = document.createElement("option");
+            allOption.value = "all";
+            allOption.textContent = "All users";
+            select.appendChild(allOption);
+
+            groups.forEach(group => {
+                const option = document.createElement("option");
+                option.value = group.id;
+                option.textContent = group.name;
+                select.appendChild(option);
+            });
+        }
+
+        function showAnnouncements() {
+            const container = $("announcements");
+            container.innerHTML = "";
+            $("announcementCount").textContent = announcements.length;
+
+            if (!announcements.length) {
+                container.textContent = "No announcements yet.";
+                return;
+            }
+
+            [...announcements].reverse().forEach(item => {
+                const card = document.createElement("article");
+                card.className = "announcement-card";
+
+                const title = document.createElement("h3");
+                title.textContent = item.title;
+
+                const message = document.createElement("p");
+                message.textContent = item.message;
+
+                const meta = document.createElement("small");
+                const group = groups.find(g => g.id === item.groupId);
+                const target = item.groupId === "all"
+                    ? "University-wide"
+                    : group ? group.name : "Group announcement";
+
+                meta.textContent = target + " · " + item.sender +
+                    " · " + new Date(item.time).toLocaleString();
+
+                card.append(title, message, meta);
+                container.appendChild(card);
+            });
+        }
+
+        function showMessage(message) {
+            const empty = $("messages").querySelector(".empty-state");
+            if (empty) {
+                empty.remove();
+            }
+
+            const card = document.createElement("article");
+            card.className = "message";
+
+            const sender = document.createElement("strong");
+            sender.textContent = message.sender;
+
+            const text = document.createElement("p");
+            text.textContent = message.text;
+
+            const time = document.createElement("small");
+            time.textContent = new Date(message.time).toLocaleTimeString();
+
+            card.append(sender, text, time);
+            $("messages").appendChild(card);
+            $("messages").scrollTop = $("messages").scrollHeight;
+        }
+
+        async function loadHistory(groupId) {
+            try {
+                const result = await api(
+                    "/api/groups/" + encodeURIComponent(groupId) + "/messages"
+                );
+
+                if (selectedGroup !== groupId) {
+                    return;
+                }
+
+                $("messages").innerHTML = "";
+
+                if (!result.messages.length) {
+                    $("messages").innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-icon">✉</div>
+                            <h3>No messages yet</h3>
+                            <p>Start the conversation.</p>
+                        </div>`;
+                    return;
+                }
+
+                result.messages.forEach(showMessage);
+            } catch (error) {
+                $("chatStatus").textContent = error.message;
+            }
+        }
+
+        $("loginForm").addEventListener("submit", login);
+
+        $("logoutButton").addEventListener("click", async () => {
+            try {
+                await api("/api/logout", "POST", {});
+            } catch (error) {
+                showStatus(error.message);
+            }
+
+            socket.disconnect();
+            me = null;
+            appPage.classList.add("hidden");
+            loginPage.classList.remove("hidden");
+            $("logoutButton").classList.add("hidden");
+            $("loginForm").reset();
+            $("loginStatus").textContent = "You have logged out.";
+        });
+
+        $("userForm").addEventListener("submit", async event => {
+            event.preventDefault();
+
+            try {
+                const courses = $("newCourses").value
+                    .split(",")
+                    .map(code => code.trim().toUpperCase())
+                    .filter(Boolean);
+
+                await api("/api/users", "POST", {
+                    name: $("newName").value,
+                    username: $("newUsername").value,
+                    password: $("newPassword").value,
+                    role: $("newRole").value,
+                    department: $("newDepartment").value,
+                    courses
+                });
+
+                $("userForm").reset();
+                await startApp();
+                showStatus("User created successfully.");
+            } catch (error) {
+                showStatus(error.message);
+            }
+        });
+
+        $("newGroupType").addEventListener("change", () => {
+            $("courseCodeWrap").classList.toggle(
+                "hidden", $("newGroupType").value !== "Course"
+            );
+        });
+
+        $("groupForm").addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const members = Array.from(
+                $("createMemberOptions").querySelectorAll("input:checked")
+            ).map(input => Number(input.value));
+
+            try {
+                await api("/api/groups", "POST", {
+                    name: $("newGroupName").value,
+                    type: $("newGroupType").value,
+                    courseCode: $("newCourseCode").value,
+                    members
+                });
+
+                $("groupForm").reset();
+                $("courseCodeWrap").classList.add("hidden");
+                await startApp();
+                showStatus("Group created successfully.");
+            } catch (error) {
+                showStatus(error.message);
+            }
+        });
+
+        $("manageGroup").addEventListener("change", showManageMembers);
+
+        $("saveMembers").addEventListener("click", async () => {
+            const groupId = $("manageGroup").value;
+
+            const members = Array.from(
+                $("manageMemberOptions").querySelectorAll("input:checked")
+            ).map(input => Number(input.value));
+
+            try {
+                await api(
+                    "/api/groups/" + encodeURIComponent(groupId) + "/members",
+                    "PUT",
+                    { members }
+                );
+
+                await startApp();
+                showStatus("Group membership updated.");
+            } catch (error) {
+                showStatus(error.message);
+            }
+        });
+
+        $("announcementForm").addEventListener("submit", async event => {
+            event.preventDefault();
+
+            try {
+                await api("/api/announcements", "POST", {
+                    title: $("announcementTitle").value,
+                    message: $("announcementMessage").value,
+                    groupId: $("announcementTarget").value
+                });
+
+                $("announcementForm").reset();
+
+                const result = await api("/api/data");
+                announcements = result.announcements;
+                showAnnouncements();
+                showStatus("Announcement published.");
+            } catch (error) {
+                showStatus(error.message);
+            }
+        });
+
+        $("messageForm").addEventListener("submit", event => {
+            event.preventDefault();
+
+            const text = $("messageInput").value.trim();
+
+            if (!selectedGroup) {
+                $("chatStatus").textContent = "Join a group first.";
+                return;
+            }
+
+            if (text) {
+                socket.emit("send-message", text);
+                $("messageInput").value = "";
+            }
+        });
+
+        socket.on("connect", () => {
+            $("chatStatus").textContent = "Connected. Choose an authorized group.";
+        });
+
+        socket.on("connect_error", () => {
+            $("chatStatus").textContent = "Connection failed. Please log in again.";
+        });
+
+        socket.on("joined-group", async group => {
+            selectedGroup = group.groupId;
+            $("chatTitle").textContent = group.name;
+            $("chatStatus").textContent = "Connected to " + group.name;
+            showGroups();
+            await loadHistory(group.groupId);
+        });
+
+        socket.on("error-message", message => {
+            selectedGroup = null;
+            $("chatStatus").textContent = message;
+            showGroups();
+        });
+
+        socket.on("access-revoked", data => {
+            if (selectedGroup === data.groupId) {
+                resetChat(data.message);
+            }
+            $("chatStatus").textContent = data.message;
+            showGroups();
+        });
+
+        socket.on("new-message", message => {
+            if (message.groupId === selectedGroup) {
+                showMessage(message);
+            }
+        });
+
+        socket.on("new-announcement", announcement => {
+            if (!announcements.some(item => item.id === announcement.id)) {
+                announcements.push(announcement);
+                showAnnouncements();
+            }
+        });
+
+        $("newGroupType").dispatchEvent(new Event("change"));
+
+        api("/api/me")
+            .then(() => startApp())
+            .catch(() => {
+                loginPage.classList.remove("hidden");
+                appPage.classList.add("hidden");
+            });
+    </script>
+</body>
+</html>
